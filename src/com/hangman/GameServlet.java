@@ -15,8 +15,23 @@ public class GameServlet extends HttpServlet {
         boolean hit = Handler.checkTheLetter(letterIndex);
         if (hit) {
             Handler.handleHitOption(letterIndex);
+            boolean win = Handler.checkWin();
+            if (win) {
+                req.getSession().setAttribute("win", "true");
+                Handler.numberOfImg = 10;
+            } else {
+                req.getSession().setAttribute("win", "false");
+            }
         } else {
+            Handler.numberOfImg++;
             Handler.handleNoHitOption(letterIndex);
+            boolean lose = Handler.checkLose();
+            if (lose) {
+                req.getSession().setAttribute("lose", "true");
+                Handler.numberOfImg = 11;
+            } else {
+                req.getSession().setAttribute("lose", "false");
+            }
         }
         req.getRequestDispatcher("/index.jsp").forward(req,resp);
     }
