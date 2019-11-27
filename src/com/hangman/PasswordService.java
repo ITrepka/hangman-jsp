@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 public class PasswordService {
-    public List<String> passwords;
-    private Random random;
+    public static List<String> passwords;
+    private static Random random;
 
-    {
+    static {
         random = new Random();
         passwords = Arrays.asList("Life is too important to be taken seriously",
                 "It always seems impossible until it is done",
@@ -21,9 +21,20 @@ public class PasswordService {
                 "Once you question your own belief it is over");
     }
 
-    public String getRandomPassword() {
+    public static String getRandomPassword() {
         int index = random.nextInt(passwords.size());
-        return passwords.get(index);
+        return passwords.get(index).toUpperCase();
     }
 
+    public static String hidePassword(String password) {
+        StringBuilder sb = new StringBuilder();
+        for (String letter: password.split("")) {
+            if (letter.equals(" ")) {
+                sb.append(" ");
+            } else {
+                sb.append("-");
+            }
+        }
+        return sb.toString();
+    }
 }
